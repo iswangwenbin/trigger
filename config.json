@@ -1,0 +1,12 @@
+{
+  "ServiceSettings": {
+    "ListenAddress": ":9000"
+  },
+  "Git": {
+    "Username": "username",
+    "Password": "password"
+  },
+  "Repositories": {
+    "design": "/www/web/path"
+  }
+}
