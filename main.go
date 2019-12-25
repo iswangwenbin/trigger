@@ -38,13 +38,13 @@ func trigger(w http.ResponseWriter, r *http.Request) {
 	switch payload.(type) {
 	case gitlab.PushEventPayload:
 		push := payload.(gitlab.PushEventPayload)
-		fmt.Printf("======== PushEvent ========\n")
-		fmt.Printf("Name:%+v\n", push.Repository.Name)
-		fmt.Printf("URL:%+v\n", push.Repository.URL)
+		printInfo("", "================================================")
+		printInfo("RepositoryName", push.Repository.Name)
+		printInfo("RepositoryURL", push.Repository.URL)
 		path := config.Get("Repositories", push.Repository.Name).String("")
 		pullCode(path)
 	default:
-		fmt.Printf("%+v", payload)
+		fmt.Printf("unknown payload:%+v\n", payload)
 	}
 }
 
@@ -103,6 +103,14 @@ func loadConfig(path string) {
 	err := config.LoadFile(path)
 	if err != nil {
 		panic(err)
+	}
+}
+
+func printInfo(tag string, value interface{}) {
+	if tag == "" {
+		fmt.Printf("%v\n", value)
+	} else {
+		fmt.Printf("%-18s    %v\n", tag+":", value)
 	}
 }
 
